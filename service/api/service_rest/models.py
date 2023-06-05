@@ -8,6 +8,9 @@ class Technician(models.Model):
     last_name = models.CharField(max_length=50)
     employee_id = models.CharField(max_length=50)
 
+    def __str__(self):
+        return self.employee_id
+
 
 class Appointment(models.Model):
     date_time = models.DateTimeField()

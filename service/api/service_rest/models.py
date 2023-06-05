@@ -25,6 +25,9 @@ class Appointment(models.Model):
         on_delete=models.PROTECT,
     )
 
+    def __str__(self):
+        return self.customer
+
 
 class AutomobileVO(models.Model):
     vin = models.CharField(max_length=17, unique=True)

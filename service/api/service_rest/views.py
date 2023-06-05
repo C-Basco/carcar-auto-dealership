@@ -36,9 +36,19 @@ class AppointmentDetailEncoder(ModelEncoder):
 @require_http_methods(["GET", "POST"])
 def api_list_technicians(request):
     if request.method == "GET":
-        technician = Technician.objects.all()
+        technicians = Technician.objects.all()
+        technician_list = []
+
+        for technician in technicians:
+            technician_dict = {}
+            technician_dict['first_name'] = technician.first_name
+            technician_dict['last_name'] = technician.last_name
+            technician_dict['employee_id'] = technician.employee_id
+            technician_dict['id'] = technician.id
+
+            technician_list.append(technician_dict)
         return JsonResponse(
-            {'technician': technician},
+            {'technicians': technician_list, },
             encoder=TechnicianEncoder,
         )
     else:
@@ -56,3 +66,34 @@ def api_delete_technician(request, id):
     if request.method == "DELETE":
         count, _ = Technician.objects.filter(id=id).delete()
         return JsonResponse({"deleted": count > 0})
+    
+
+@require_http_methods(["GET", "POST"])
+def api_list_appointments(request):
+    if request.method == "GET":
+        appointment = Appointment.objects.all()
+        return JsonResponse(
+            {'appointments': appointment},
+            encoder=AppointmentDetailEncoder,
+        )
+    else:
+        content = json.loads(request.body)
+
+        try:
+            technician = Technician.objects.get(id=content["technician"])
+            content["technician"] = technician
+        except Technician.DoesNotExist:
+            return JsonResponse(
+                {"message": "Invalid technician"},
+                status=400,
+            )
+
+        appointment = Appointment.objects.create(**content)
+        return JsonResponse(
+            appointment,
+            encoder=AppointmentDetailEncoder,
+            safe=False
+        )
+
+    
+    

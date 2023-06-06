@@ -26,3 +26,21 @@ async function loadTechnicians() {
   }
 }
 loadTechnicians();
+
+
+async function loadAppointments(){
+  const response = await fetch('http://localhost:8080/api/appointments/');
+  if(response.ok){
+    const data = await response.json()
+    root.render(
+      <React.StrictMode>
+        <App appointments={data.appointments} />
+      </React.StrictMode>
+    );
+  } else {
+    console.error(response)
+  }
+
+  
+  }
+loadAppointments()

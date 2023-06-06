@@ -3,6 +3,7 @@ import MainPage from './MainPage';
 import Nav from './Nav';
 import TechnicianList from './ListTechnicians';
 import TechnicianForm from './TechnicianForm';
+import AppointmentList from './ListAppointments';
 
 
 
@@ -18,6 +19,7 @@ function App(props) {
           <Route path="/" element={<MainPage />} />
           <Route path="technicians/" element={<TechnicianList technicians={props.technicians} />} />
           <Route path='technicians/new' element={<TechnicianForm />} />
+          <Route path="appointments/" element={<AppointmentList appointments={props.appointments} />} />
         </Routes>
       </div>
     </BrowserRouter>

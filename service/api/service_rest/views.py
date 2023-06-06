@@ -103,18 +103,20 @@ def api_list_appointments(request):
     
 @require_http_methods(["DELETE", "GET"])
 def api_list_appointment(request, id):
-    if request.method == "DELETE":
-        count, _ = Appointment.objects.filter(id=id).delete()
-        return JsonResponse({"deleted": count > 0})
-    elif request.method == "GET":
+    if request.method == "GET":
         appointment = get_object_or_404(Appointment, id=id)
         return JsonResponse(
-            {"appointment": appointment},
+            appointment,
             encoder=AppointmentDetailEncoder,
-            safe=False
+            safe=False,
         )
+    elif request.method == "DELETE":
+        appointment = get_object_or_404(Appointment, id=id)
+        count, _ = appointment.delete()
+        return JsonResponse({"deleted": count > 0})
+        
 
-# NOTE: add this to urls
+
 
 @require_http_methods(["PUT"])
 def api_cancel_appointment(request, id):

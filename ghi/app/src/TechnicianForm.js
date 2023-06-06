@@ -2,10 +2,12 @@ import React, { useEffect, useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 
 
+
 function TechnicianForm(props){
     const [firstName, setFirstName] = useState('')
     const [lastName, setLastName] = useState('')
     const [employeeId, setEmployeeId] = useState('')
+    const navigate = useNavigate()
 
     const handleFirstNameChange = (event) => {
         const value = event.target.value
@@ -46,6 +48,9 @@ function TechnicianForm(props){
         setFirstName('')
         setLastName('')
         setEmployeeId('')
+
+        navigate('/technicians')
+        window.location.reload()
         
       } else{
         console.log('did not submit')

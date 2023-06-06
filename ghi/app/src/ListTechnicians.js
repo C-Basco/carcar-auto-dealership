@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 function TechnicianList(props) {
     return (
         <div>
@@ -22,6 +24,9 @@ function TechnicianList(props) {
           })}
         </tbody>
       </table>
+        <div className="d-grid gap-2 d-sm-flex justify-content-sm-center">
+            <Link to="/technicians/new" className="btn btn-primary btn-lg px-4 gap-3">Add a Tech</Link>
+        </div>
       </div>
     );
   }

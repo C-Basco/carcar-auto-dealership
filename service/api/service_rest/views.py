@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import JsonResponse
-from .models import AutomobileVO, Technician, Appointment
+from .models import AutomobileVO, Technician, Appointment, Status
 from common.json import ModelEncoder
 from django.views.decorators.http import require_http_methods
 import json
@@ -91,7 +91,7 @@ def api_list_appointments(request):
                 status=400,
             )
 
-        appointment = Appointment.objects.create(**content)
+        appointment = Appointment.create(**content)
         return JsonResponse(
             appointment,
             encoder=AppointmentDetailEncoder,
@@ -100,20 +100,42 @@ def api_list_appointments(request):
 
     
     
-@require_http_methods(["DELETE"])
-def api_delete_appointment(request, id):
+@require_http_methods(["DELETE", "GET"])
+def api_list_appointment(request, id):
     if request.method == "DELETE":
-        count, _ = Technician.objects.filter(id=id).delete()
+        count, _ = Appointment.objects.filter(id=id).delete()
         return JsonResponse({"deleted": count > 0})
+    elif request.method == "GET":
+        appointment = Appointment.objects.filter(id=id)
+        return JsonResponse(
+            {"appointment": appointment},
+            encoder=AppointmentDetailEncoder,
+            safe=False
+        )
 
 # NOTE: add this to urls
 
-@require_http_methods(["POST"])
+@require_http_methods(["PUT"])
 def api_cancel_appointment(request, id):
-    pass
+    if request.method == "PUT":
+        appointment = Appointment.objects.get(id=id)
+        appointment.cancel()
+        return JsonResponse(
+            appointment,
+            encoder=AppointmentDetailEncoder,
+            safe=False,
+        )
+    
 
 
-@require_http_methods(["POST"])
+@require_http_methods(["PUT"])
 def api_finish_appointment(request, id):
-    pass
+    if request.method == "PUT":
+        appointment = Appointment.objects.get(id=id)
+        appointment.finish()
+        return JsonResponse(
+            appointment,
+            encoder=AppointmentDetailEncoder,
+            safe=False,
+        )
 

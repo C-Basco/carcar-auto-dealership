@@ -68,8 +68,12 @@ def api_list_technicians(request):
 @require_http_methods(["DELETE"])
 def api_delete_technician(request, id):
     if request.method == "DELETE":
-        count, _ = Technician.objects.filter(id=id).delete()
-        return JsonResponse({"deleted": count > 0})
+        tech = get_object_or_404(Technician, id=id)
+        tech.delete()
+        return JsonResponse(
+                {"message": "Deleted"},
+                status=200,
+            )
     
 
 @require_http_methods(["GET", "POST"])

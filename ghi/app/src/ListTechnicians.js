@@ -5,18 +5,18 @@ function TechnicianList(props) {
       <table className="table table-striped">
         <thead>
           <tr>
+            <th>Employee Id</th>
             <th>First Name</th>
             <th>Last Name</th>
-            <th>Employee Id</th>
           </tr>
         </thead>
         <tbody>
           {props.technicians?.map(tech => {
             return (
               <tr key={tech.id}>
+                <td>{ tech.employee_id }</td>
                 <td>{ tech.first_name }</td>
                 <td>{ tech.last_name }</td>
-                <td>{ tech.employee_id }</td>
               </tr>
             );
           })}

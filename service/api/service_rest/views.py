@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.http import JsonResponse
 from .models import AutomobileVO, Technician, Appointment, Status
 from common.json import ModelEncoder
@@ -106,7 +106,7 @@ def api_list_appointment(request, id):
         count, _ = Appointment.objects.filter(id=id).delete()
         return JsonResponse({"deleted": count > 0})
     elif request.method == "GET":
-        appointment = Appointment.objects.filter(id=id)
+        appointment = get_object_or_404(Appointment, id=id)
         return JsonResponse(
             {"appointment": appointment},
             encoder=AppointmentDetailEncoder,

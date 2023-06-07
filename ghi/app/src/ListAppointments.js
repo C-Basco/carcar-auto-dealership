@@ -1,7 +1,32 @@
 import { Link } from 'react-router-dom';
+import React, {useEffect, useState } from 'react';
 
-function AppointmentList(props){
-    console.log(props.appointments)
+function AppointmentList(){
+
+  const [appointments, setAppointments] = useState('')
+  
+    const fetchData = async () => {
+      const url = 'http://localhost:8080/api/appointments/';
+      const response = await fetch(url);
+      if (response.ok) {
+        const data = await response.json();
+        setAppointments(data.appointments);
+        
+        
+      }
+    }
+    useEffect(() => {
+      fetchData();
+      
+      
+    }, []);
+
+   
+    if(!appointments){
+      return null
+
+    }
+
     return(<div>
         <h3>Current Appointments</h3>
   <table className="table table-striped">
@@ -13,19 +38,21 @@ function AppointmentList(props){
         <th>Time</th>
         <th>Technician</th>
         <th>Status</th>
+        <th>Reason</th>
         <th>Is VIP?</th>
       </tr>
     </thead>
     <tbody>
-      {props.appointments?.map(app => {
+      {appointments.map(appointment => {
         return (
-          <tr key={app.id}>
-            <td>{ app.vin }</td>
-            <td>{ app.customer }</td>
-            <td>{ app.date_time }</td>
-            <td>{ app.date_time }</td>
-            <td>{ app.technician.employee_id }</td>
-            <td>{ app.status }</td>
+          <tr key={ appointment.id }>
+            <td>{ appointment.vin }</td>
+            <td>{ appointment.customer }</td>
+            <td>{ appointment.date_time }</td>
+            <td>{ appointment.date_time }</td>
+            <td>{ appointment.technician.employee_id }</td>
+            <td>{ appointment.status }</td>
+            <td>{ appointment.reason }</td>
 
             
           </tr>

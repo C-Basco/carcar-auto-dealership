@@ -11,21 +11,5 @@ root.render(
 );
 
 
-async function loadData() {
-  const techsResponse = await fetch('http://localhost:8080/api/technicians/');
-  const appointmentResponse = await fetch('http://localhost:8080/api/appointments/');
-  if(techsResponse.ok && appointmentResponse.ok ){
-    const techsData = await techsResponse.json()
-    const appointmentData = await appointmentResponse.json()
-    
-    root.render(
-      <React.StrictMode>
-        <App technicians={techsData.technicians} appointments={appointmentData.appointments} />
-        
-      </React.StrictMode>
-    );
-  } else {
-    console.error(techsResponse, appointmentResponse)
-  }
-}
-loadData();
+
+

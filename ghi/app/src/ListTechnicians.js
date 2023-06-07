@@ -1,7 +1,33 @@
 import { Link } from 'react-router-dom';
+import React, {useEffect, useState } from 'react';
 
-function TechnicianList(props) {
-    console.log(props.technicians)
+function TechnicianList() {
+  
+
+    const [technicians, setTechnicians] = useState('')
+  
+    const fetchData = async () => {
+      const url = 'http://localhost:8080/api/technicians/';
+      const response = await fetch(url);
+      if (response.ok) {
+        const data = await response.json();
+        setTechnicians(data.technicians);
+        
+        
+      }
+    }
+    useEffect(() => {
+      fetchData();
+      
+      
+    }, []);
+
+   
+    if(!technicians){
+      return null
+
+    }
+
     return (
         <div>
             <h3>Service Technicians</h3>
@@ -14,7 +40,8 @@ function TechnicianList(props) {
           </tr>
         </thead>
         <tbody>
-        {props.technicians?.map(tech => {
+        {technicians.map(tech => {
+          
             return (
               <tr key={tech.id}>
                 <td>{ tech.employee_id }</td>

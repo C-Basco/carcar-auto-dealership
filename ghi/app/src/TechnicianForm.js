@@ -54,14 +54,15 @@ function TechnicianForm(props){
         
       } else{
         console.log('did not submit')
-        console.log(data)
+        
       }
 
 
     }
 
 
-    return (<div className="row">
+    return (
+    <div className="row">
     <div className="offset-3 col-6">
       <div className="shadow p-4 mt-4">
         <h1>Add a new Technician</h1>
@@ -88,8 +89,9 @@ function TechnicianForm(props){
         </form>
       </div>
     </div>
-  </div>)
-
+  </div>
+  
+  )
 }
 
 export default TechnicianForm

@@ -1,13 +1,10 @@
 from django.shortcuts import get_object_or_404
 from django.http import JsonResponse
-from .models import AutomobileVO, Technician, Appointment, Status
+from .models import Technician, Appointment
 from django.views.decorators.http import require_http_methods
 import json
 from .encoders import (AppointmentDetailEncoder,
-                       TechnicianEncoder,
-                       AutomobileVOEncoder)
-
-
+                       TechnicianEncoder)
 
 
 @require_http_methods(["GET", "POST"])
@@ -47,7 +44,7 @@ def api_delete_technician(request, id):
                 {"message": "Deleted"},
                 status=200,
             )
-    
+
 
 @require_http_methods(["GET", "POST"])
 def api_list_appointments(request):
@@ -76,7 +73,7 @@ def api_list_appointments(request):
             safe=False
         )
 
-       
+
 @require_http_methods(["DELETE", "GET"])
 def api_list_appointment(request, id):
     if request.method == "GET":
@@ -90,7 +87,7 @@ def api_list_appointment(request, id):
         appointment = get_object_or_404(Appointment, id=id)
         count, _ = appointment.delete()
         return JsonResponse({"deleted": count > 0})
-        
+
 
 @require_http_methods(["PUT"])
 def api_cancel_appointment(request, id):
@@ -102,7 +99,7 @@ def api_cancel_appointment(request, id):
             encoder=AppointmentDetailEncoder,
             safe=False,
         )
-   
+
 
 @require_http_methods(["PUT"])
 def api_finish_appointment(request, id):

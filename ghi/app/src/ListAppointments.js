@@ -121,12 +121,12 @@ function AppointmentList(){
             <td>{ appointment.status }</td>
             <td>
               <div className="d-grid gap-2 d-sm-flex justify-content-sm-center">
-                <button type="button" className="btn btn-outline-danger" onClick={() => {handleCancel(appointment.id)}}>Cancel</button>
+                <button type="button" className="btn btn-danger" onClick={() => {handleCancel(appointment.id)}}>Cancel</button>
               </div>
             </td>
             <td>
               <div className="d-grid gap-2 d-sm-flex justify-content-sm-center">
-                <button type="button" className="btn btn-outline-danger" onClick={() => {handleFinish(appointment.id)}}>Finish</button>
+                <button type="button" className="btn btn-primary"onClick={() => {handleFinish(appointment.id)}}>Finish</button>
               </div>
             </td>
 

@@ -1,4 +1,4 @@
-from .models import AutomobileVO, Technician, Appointment, Status
+from .models import AutomobileVO, Technician, Appointment
 from common.json import ModelEncoder
 
 

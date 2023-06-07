@@ -75,7 +75,7 @@ function ListServiceHistory(){
     return (
     <div>
     <h3>Service History</h3>
-    <div>
+    <div className="search">
         <form onSubmit={handleSubmit} id="vin-search-form">
             <input onChange={handleVinInputChange}type="text" placeholder="Search by Vin"id="vin" className="vin"value={vinInput}/>
             <button className="btn btn-primary">Submit</button>

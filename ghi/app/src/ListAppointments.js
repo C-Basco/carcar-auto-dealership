@@ -4,28 +4,61 @@ import React, {useEffect, useState } from 'react';
 function AppointmentList(){
 
   const [appointments, setAppointments] = useState('')
+  const [autos, setAutomobiles] = useState('')
   
+
+  
+
     const fetchData = async () => {
-      const url = 'http://localhost:8080/api/appointments/';
-      const response = await fetch(url);
-      if (response.ok) {
-        const data = await response.json();
-        setAppointments(data.appointments);
+      const appointmentUrl = 'http://localhost:8080/api/appointments/';
+      const automobileUrl = 'http://localhost:8100/api/automobiles/'
+      const appointmentResponse = await fetch(appointmentUrl);
+      const automobileResponse = await fetch(automobileUrl);
+      
+      
+      if (appointmentResponse.ok && automobileResponse.ok) {
+        const appointmentData = await appointmentResponse.json();
+        const automobileData = await automobileResponse.json()
+        setAppointments(appointmentData.appointments);
+        setAutomobiles(automobileData.autos)
         
-        
+         
       }
     }
     useEffect(() => {
-      fetchData();
-      
-      
+      fetchData();     
     }, []);
+
+  
+  
 
    
     if(!appointments){
       return null
 
     }
+
+    
+    
+
+  function isVIP(vin){
+    const vipVins = autos.map(auto => auto.vin)
+    
+
+    if(vipVins.includes(vin)){
+      const value = 'VIP ⭐️'
+      return value
+
+    } else {
+      const value = 'No'
+      return value
+    }
+    
+  }
+  
+  
+
+
 
     async function handleCancel(id){
     
@@ -84,16 +117,16 @@ function AppointmentList(){
             <td>{ appointment.technician.employee_id }</td>
             
             <td>{ appointment.reason }</td>
-            <td>isvip</td>
+            <td>{ isVIP(appointment.vin)}</td>
             <td>{ appointment.status }</td>
             <td>
               <div className="d-grid gap-2 d-sm-flex justify-content-sm-center">
-                <button type="button" class="btn btn-outline-danger" onClick={() => {handleCancel(appointment.id)}}>Cancel</button>
+                <button type="button" className="btn btn-outline-danger" onClick={() => {handleCancel(appointment.id)}}>Cancel</button>
               </div>
             </td>
             <td>
               <div className="d-grid gap-2 d-sm-flex justify-content-sm-center">
-                <button type="button" class="btn btn-outline-danger" onClick={() => {handleFinish(appointment.id)}}>Finish</button>
+                <button type="button" className="btn btn-outline-danger" onClick={() => {handleFinish(appointment.id)}}>Finish</button>
               </div>
             </td>
 

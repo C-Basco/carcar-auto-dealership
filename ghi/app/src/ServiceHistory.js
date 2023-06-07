@@ -4,27 +4,47 @@ import React, {useEffect, useState } from 'react';
 
 function ListServiceHistory(){
     let [appointments, setAppointments] = useState('')
-    const [vins, setVins] = useState('')
     const [vinInput, setVinInput] = useState('')
+    const [autos, setAutomobiles] = useState('')
 
     const fetchData = async () => {
       const appointmentUrl = 'http://localhost:8080/api/appointments/';
-      const vinUrl = 'http://localhost:8100/api/automobiles/'
-      const appointmentResponse = await fetch(appointmentUrl);
-      const vinResponse = await fetch(vinUrl);
+      const automobileUrl = 'http://localhost:8100/api/automobiles/'
+      const appointmentResponse = await fetch(appointmentUrl);   
+      const automobileResponse = await fetch(automobileUrl);
       
       
-      if (appointmentResponse.ok && vinResponse.ok) {
+      
+      if (appointmentResponse.ok && automobileResponse.ok) {
         const appointmentData = await appointmentResponse.json();
-        const vinData = await vinResponse.json()
+        const automobileData = await automobileResponse.json()
         setAppointments(appointmentData.appointments);
-        setVins(vinData.vins)        
+        setAutomobiles(automobileData.autos)
+        
+         
       }
     }
     useEffect(() => {
       fetchData();     
     }, []);
     
+
+    function isVIP(vin){
+      const vipVins = autos.map(auto => auto.vin)
+      
+  
+      if(vipVins.includes(vin)){
+        const value = 'VIP ⭐️'
+        return value
+  
+      } else {
+        const value = 'No'
+        return value
+      }
+      
+    }
+
+
 
     const handleVinInputChange = (event) => {
         const value = event.target.value;
@@ -85,6 +105,7 @@ function ListServiceHistory(){
             <td>{ appointment.technician.employee_id }</td>
             <td>{ appointment.status }</td>
             <td>{ appointment.reason }</td>
+            <td>{ isVIP(appointment.vin)}</td>
 
             
           </tr>

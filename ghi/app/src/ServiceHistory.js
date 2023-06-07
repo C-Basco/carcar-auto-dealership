@@ -4,22 +4,36 @@ import React, {useEffect, useState } from 'react';
 
 function ListServiceHistory(){
     const [appointments, setAppointments] = useState('')
+    const [vins, setVins] = useState('')
+    const [vinInput, setVinInput] = useState('')
+
+    let sumbittedInput = false
   
     const fetchData = async () => {
-      const url = 'http://localhost:8080/api/appointments/';
-      const response = await fetch(url);
-      if (response.ok) {
-        const data = await response.json();
-        setAppointments(data.appointments);
-        
-        
+      const appointmentUrl = 'http://localhost:8080/api/appointments/';
+      const vinUrl = 'http://localhost:8100/api/automobiles/'
+      const appointmentResponse = await fetch(appointmentUrl);
+      const vinResponse = await fetch(vinUrl);
+      
+      
+      if (appointmentResponse.ok && vinResponse.ok) {
+        const appointmentData = await appointmentResponse.json();
+        const vinData = await vinResponse.json()
+        setAppointments(appointmentData.appointments);
+        setVins(vinData.vins)        
       }
     }
     useEffect(() => {
-      fetchData();
-      
-      
+      fetchData();     
     }, []);
+    
+
+    const handleVinInputChange = (event) => {
+        const value = event.target.value;
+        setVinInput(value)
+
+    }
+    
 
    
     if(!appointments){
@@ -27,12 +41,34 @@ function ListServiceHistory(){
 
     }
 
-    let servicedAppointments = appointments.filter(appointment => appointment.status === "FINISHED" || appointment.status === "CANCELED")
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+        const data = {}
+        data["input"] = vinInput
+        console.log(vinInput)
+
+        let appointmentsBySearchedVin = appointments.filter(appointment => appointment.vin === vinInput)
+        console.log(appointmentsBySearchedVin)
+        
+
+        setVinInput('')
+        
+
+
+    }
+
+    
 
 
     return (
     <div>
-        <h3>Service History</h3>
+    <h3>Service History</h3>
+    <div>
+        <form onSubmit={handleSubmit} id="vin-search-form">
+            <input onChange={handleVinInputChange}type="text" placeholder="Search by Vin"id="vin" className="vin"value={vinInput}/>
+            <button className="btn btn-primary">Submit</button>
+        </form>
+    </div>
   <table className="table table-striped">
     <thead>
       <tr>
@@ -47,7 +83,7 @@ function ListServiceHistory(){
       </tr>
     </thead>
     <tbody>
-      {servicedAppointments.map(appointment => {
+      {appointments.map(appointment => {
         return (
           <tr key={ appointment.id }>
             <td>{ appointment.vin }</td>

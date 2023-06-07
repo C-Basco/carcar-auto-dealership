@@ -48,8 +48,8 @@ function AppointmentList(){
           <tr key={ appointment.id }>
             <td>{ appointment.vin }</td>
             <td>{ appointment.customer }</td>
-            <td>{ appointment.date_time }</td>
-            <td>{ appointment.date_time }</td>
+            <td>{new Date(appointment.date_time).toLocaleDateString()}</td>
+            <td>{new Date(appointment.date_time).toLocaleTimeString()}</td>
             <td>{ appointment.technician.employee_id }</td>
             <td>{ appointment.status }</td>
             <td>{ appointment.reason }</td>

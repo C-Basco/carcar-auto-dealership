@@ -25,7 +25,7 @@ def poll(repeat=True):
             content = json.loads(response.content)
             for a in content["autos"]:
                 AutomobileVO.objects.update_or_create(
-                    id=a["id"],
+                    vin= a["vin"],
                     defaults={"vin": a["vin"]}
                 )
     

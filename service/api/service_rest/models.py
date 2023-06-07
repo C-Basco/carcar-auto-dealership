@@ -31,7 +31,7 @@ class Appointment(models.Model):
         appointment.save()
         return appointment
 
-    date_time = models.DateTimeField()
+    date_time = models.CharField(max_length=30)
     reason = models.CharField(max_length=200)
     vin = models.CharField(max_length=17)
     customer = models.CharField(max_length=100)

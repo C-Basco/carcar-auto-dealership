@@ -3,12 +3,10 @@ import React, {useEffect, useState } from 'react';
 
 
 function ListServiceHistory(){
-    const [appointments, setAppointments] = useState('')
+    let [appointments, setAppointments] = useState('')
     const [vins, setVins] = useState('')
     const [vinInput, setVinInput] = useState('')
 
-    let sumbittedInput = false
-  
     const fetchData = async () => {
       const appointmentUrl = 'http://localhost:8080/api/appointments/';
       const vinUrl = 'http://localhost:8100/api/automobiles/'
@@ -41,19 +39,13 @@ function ListServiceHistory(){
 
     }
 
-    const handleSubmit = async (event) => {
+    const handleSubmit = (event) => {
         event.preventDefault();
         const data = {}
         data["input"] = vinInput
-        console.log(vinInput)
 
         let appointmentsBySearchedVin = appointments.filter(appointment => appointment.vin === vinInput)
-        console.log(appointmentsBySearchedVin)
-        
-
-        setVinInput('')
-        
-
+        setAppointments(appointmentsBySearchedVin)
 
     }
 

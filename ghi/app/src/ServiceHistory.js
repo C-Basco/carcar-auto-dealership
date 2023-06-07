@@ -1,9 +1,9 @@
 import { Link } from 'react-router-dom';
 import React, {useEffect, useState } from 'react';
 
-function AppointmentList(){
 
-  const [appointments, setAppointments] = useState('')
+function ListServiceHistory(){
+    const [appointments, setAppointments] = useState('')
   
     const fetchData = async () => {
       const url = 'http://localhost:8080/api/appointments/';
@@ -27,11 +27,12 @@ function AppointmentList(){
 
     }
 
-    let currentAppointments = appointments.filter(appointment => appointment.status === "CONFIRMED")
+    let servicedAppointments = appointments.filter(appointment => appointment.status === "FINISHED" || appointment.status === "CANCELED")
 
-    return(
+
+    return (
     <div>
-        <h3>Current Appointments</h3>
+        <h3>Service History</h3>
   <table className="table table-striped">
     <thead>
       <tr>
@@ -40,14 +41,13 @@ function AppointmentList(){
         <th>Date</th>
         <th>Time</th>
         <th>Technician</th>
-        
+        <th>Status</th>
         <th>Reason</th>
         <th>Is VIP?</th>
-        <th>Status</th>
       </tr>
     </thead>
     <tbody>
-      {currentAppointments.map(appointment => {
+      {servicedAppointments.map(appointment => {
         return (
           <tr key={ appointment.id }>
             <td>{ appointment.vin }</td>
@@ -55,9 +55,8 @@ function AppointmentList(){
             <td>{new Date(appointment.date_time).toLocaleDateString()}</td>
             <td>{new Date(appointment.date_time).toLocaleTimeString()}</td>
             <td>{ appointment.technician.employee_id }</td>
-            
-            <td>{ appointment.reason }</td>
             <td>{ appointment.status }</td>
+            <td>{ appointment.reason }</td>
 
             
           </tr>
@@ -69,4 +68,4 @@ function AppointmentList(){
   )
 }
 
-export default AppointmentList
+export default ListServiceHistory

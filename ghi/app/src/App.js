@@ -5,6 +5,7 @@ import TechnicianList from './ListTechnicians';
 import TechnicianForm from './TechnicianForm';
 import AppointmentList from './ListAppointments';
 import AppointmentForm from './AppointmentForm'
+import ListServiceHistory from './ServiceHistory';
 
 
 
@@ -22,6 +23,7 @@ function App(props) {
           <Route path='technicians/new' element={<TechnicianForm />} />
           <Route path="appointments/" element={<AppointmentList appointments={props.appointments} />} />
           <Route path='appointments/new' element={<AppointmentForm />} />
+          <Route path="appointments/history" element={<ListServiceHistory appointments={props.appointments} />} />
         </Routes>
       </div>
     </BrowserRouter>

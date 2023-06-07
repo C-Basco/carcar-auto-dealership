@@ -1,38 +1,11 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import get_object_or_404
 from django.http import JsonResponse
 from .models import AutomobileVO, Technician, Appointment, Status
-from common.json import ModelEncoder
 from django.views.decorators.http import require_http_methods
 import json
-# Create your views here.
-
-
-class AutomobileVOEncoder(ModelEncoder):
-    model = AutomobileVO
-    properties = ["vin", "sold"]
-
-
-class TechnicianEncoder(ModelEncoder):
-    model = Technician
-    properties = [ "id", "first_name", "last_name", "employee_id" ]
-
-
-class AppointmentDetailEncoder(ModelEncoder):
-    model = Appointment
-    properties = [
-        "id",
-        "date_time",
-        "reason",
-        "vin",
-        "customer",
-        "technician"
-    ]
-    encoders = {
-        "technician": TechnicianEncoder(),
-    }
-
-    def get_extra_data(self, o):
-        return {"status": o.status.name}
+from .encoders import (AppointmentDetailEncoder,
+                       TechnicianEncoder,
+                       AutomobileVOEncoder)
 
 
 
@@ -103,8 +76,7 @@ def api_list_appointments(request):
             safe=False
         )
 
-    
-    
+       
 @require_http_methods(["DELETE", "GET"])
 def api_list_appointment(request, id):
     if request.method == "GET":
@@ -120,8 +92,6 @@ def api_list_appointment(request, id):
         return JsonResponse({"deleted": count > 0})
         
 
-
-
 @require_http_methods(["PUT"])
 def api_cancel_appointment(request, id):
     if request.method == "PUT":
@@ -132,8 +102,7 @@ def api_cancel_appointment(request, id):
             encoder=AppointmentDetailEncoder,
             safe=False,
         )
-    
-
+   
 
 @require_http_methods(["PUT"])
 def api_finish_appointment(request, id):
@@ -145,4 +114,3 @@ def api_finish_appointment(request, id):
             encoder=AppointmentDetailEncoder,
             safe=False,
         )
-

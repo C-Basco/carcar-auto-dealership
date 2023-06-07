@@ -1,6 +1,5 @@
 from django.contrib import admin
 from .models import Technician, Appointment, Status
-# Register your models here.
 
 
 @admin.register(Technician)

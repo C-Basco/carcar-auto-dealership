@@ -1,7 +1,5 @@
 from django.db import models
 
-# Create your models here.
-
 
 class Technician(models.Model):
     first_name = models.CharField(max_length=50)
@@ -10,7 +8,7 @@ class Technician(models.Model):
 
     def __str__(self):
         return self.employee_id
-    
+
 
 class Status(models.Model):
     id = models.PositiveSmallIntegerField(primary_key=True)
@@ -48,7 +46,7 @@ class Appointment(models.Model):
         Status,
         related_name="appointments",
         on_delete=models.PROTECT,
-    )  
+    )
 
     def cancel(self):
         status = Status.objects.get(name="CANCELED")

@@ -27,6 +27,33 @@ function AppointmentList(){
 
     }
 
+    async function handleCancel(id){
+    
+      const response = await fetch(`http://localhost:8080/api/appointments/${id}/cancel`,{
+        method: "PUT"
+      })
+  
+      if (response.ok){
+        fetchData()
+        window.location.reload()
+      }
+    }
+
+    async function handleFinish(id){
+  
+      const response = await fetch(`http://localhost:8080/api/appointments/${id}/finish`,{
+        method: "PUT"
+      })
+  
+      if (response.ok){
+        fetchData()
+        window.location.reload()
+      }
+    }
+
+
+
+
     let currentAppointments = appointments.filter(appointment => appointment.status === "CONFIRMED")
 
     return(
@@ -57,7 +84,18 @@ function AppointmentList(){
             <td>{ appointment.technician.employee_id }</td>
             
             <td>{ appointment.reason }</td>
+            <td>isvip</td>
             <td>{ appointment.status }</td>
+            <td>
+              <div className="d-grid gap-2 d-sm-flex justify-content-sm-center">
+                <button type="button" class="btn btn-outline-danger" onClick={() => {handleCancel(appointment.id)}}>Cancel</button>
+              </div>
+            </td>
+            <td>
+              <div className="d-grid gap-2 d-sm-flex justify-content-sm-center">
+                <button type="button" class="btn btn-outline-danger" onClick={() => {handleFinish(appointment.id)}}>Finish</button>
+              </div>
+            </td>
 
             
           </tr>

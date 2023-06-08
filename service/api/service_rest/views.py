@@ -11,18 +11,8 @@ from .encoders import (AppointmentDetailEncoder,
 def api_list_technicians(request):
     if request.method == "GET":
         technicians = Technician.objects.all()
-        technician_list = []
-
-        for technician in technicians:
-            technician_dict = {}
-            technician_dict['first_name'] = technician.first_name
-            technician_dict['last_name'] = technician.last_name
-            technician_dict['employee_id'] = technician.employee_id
-            technician_dict['id'] = technician.id
-
-            technician_list.append(technician_dict)
         return JsonResponse(
-            {'technicians': technician_list, },
+            {'technicians': technicians},
             encoder=TechnicianEncoder,
         )
     else:

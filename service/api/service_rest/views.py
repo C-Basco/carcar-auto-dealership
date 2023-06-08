@@ -59,7 +59,7 @@ def api_list_appointments(request):
                 {"message": "Invalid technician"},
                 status=400,
             )
-        appointment = Appointment.create(**content)
+        appointment = Appointment.objects.create(**content)
         return JsonResponse(
             appointment,
             encoder=AppointmentDetailEncoder,

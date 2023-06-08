@@ -10,26 +10,7 @@ class Technician(models.Model):
         return self.employee_id
 
 
-class Status(models.Model):
-    id = models.PositiveSmallIntegerField(primary_key=True)
-    name = models.CharField(max_length=15, unique=True)
-
-    def __str__(self):
-        return self.name
-
-    class Meta:
-        ordering = ("id",)
-        verbose_name_plural = "statuses"
-
-
 class Appointment(models.Model):
-
-    @classmethod
-    def create(cls, **kwargs):
-        kwargs["status"] = Status.objects.get(name="CONFIRMED")
-        appointment = cls(**kwargs)
-        appointment.save()
-        return appointment
 
     date_time = models.CharField(max_length=30)
     reason = models.CharField(max_length=200)
@@ -42,19 +23,15 @@ class Appointment(models.Model):
         on_delete=models.PROTECT,
     )
 
-    status = models.ForeignKey(
-        Status,
-        related_name="appointments",
-        on_delete=models.PROTECT,
-    )
+    status = models.CharField(max_length=20, default="CONFIRMED")
 
     def cancel(self):
-        status = Status.objects.get(name="CANCELED")
+        status = "canceled"
         self.status = status
         self.save()
 
     def finish(self):
-        status = Status.objects.get(name="FINISHED")
+        status = "finished"
         self.status = status
         self.save()
 

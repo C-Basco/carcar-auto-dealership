@@ -20,12 +20,10 @@ class AppointmentDetailEncoder(ModelEncoder):
         "reason",
         "vin",
         "customer",
-        "technician"
+        "technician",
+        "status",
     ]
     encoders = {
         "technician": TechnicianEncoder(),
         "automobile": AutomobileVOEncoder(),
     }
-
-    def get_extra_data(self, o):
-        return {"status": o.status.name}

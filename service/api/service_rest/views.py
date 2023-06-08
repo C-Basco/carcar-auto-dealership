@@ -1,4 +1,3 @@
-from django.shortcuts import get_object_or_404
 from django.http import JsonResponse
 from .models import Technician, Appointment
 from django.views.decorators.http import require_http_methods
@@ -12,7 +11,7 @@ def api_list_technicians(request):
     if request.method == "GET":
         technicians = Technician.objects.all()
         return JsonResponse(
-            {'technicians': technicians},
+            {"technicians": technicians},
             encoder=TechnicianEncoder,
         )
     else:
@@ -36,7 +35,7 @@ def api_delete_technician(request, id):
             response.status_code = 200
             return response
         except Technician.DoesNotExist:
-            response = JsonResponse({'message': 'Invalid Tech'})
+            response = JsonResponse({"message": "Invalid Tech"})
             response.status_code = 404
             return response
 
@@ -46,7 +45,7 @@ def api_list_appointments(request):
     if request.method == "GET":
         appointments = Appointment.objects.all()
         return JsonResponse(
-            {'appointments': appointments},
+            {"appointments": appointments},
             encoder=AppointmentDetailEncoder,
         )
     else:

@@ -17,13 +17,16 @@ function Nav() {
               <NavLink className="nav-link" to="/appointments">Appointments</NavLink>
             </li>
             <li className="nav-item">
-              <NavLink className="nav-link" to="/appointments/new">New Appointments</NavLink>
+              <NavLink className="nav-link" to="/appointments/new">New Appointment</NavLink>
             </li>
             <li className="nav-item">
               <NavLink className="nav-link" to="/appointments/history">Service History</NavLink>
             </li>
             <li className="nav-item">
               <NavLink className="nav-link" to="/manufacturers">Manufacturers</NavLink>
+            </li>
+            <li className="nav-item">
+              <NavLink className="nav-link" to="/manufacturers/new">New Manufacturer</NavLink>
             </li>
             
           </ul>

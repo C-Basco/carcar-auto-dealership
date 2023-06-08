@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 
 function AppointmentList() {
@@ -82,9 +81,7 @@ function AppointmentList() {
 						<th>Date</th>
 						<th>Time</th>
 						<th>Technician</th>
-
 						<th>Reason</th>
-
 						<th>Status</th>
 					</tr>
 				</thead>

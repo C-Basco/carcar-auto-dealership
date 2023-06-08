@@ -92,15 +92,8 @@ function AppointmentForm(){
         setTime('')
         setTechnician('')
         SetReason('')
-
-        // navigate('/technicians')
-        // window.location.reload()
         
-      } else {
-        console.log('did not submit')
-        console.log(data)
-        
-      }
+      } 
     }
 
 

@@ -81,38 +81,36 @@ function ListServiceHistory(){
             <button className="btn btn-primary">Submit</button>
         </form>
     </div>
-  <table className="table table-striped">
-    <thead>
-      <tr>
-        <th>VIN</th>
-        <th>Customer</th>
-        <th>Date</th>
-        <th>Time</th>
-        <th>Technician</th>
-        <th>Status</th>
-        <th>Reason</th>
-        <th>Is VIP?</th>
-      </tr>
-    </thead>
-    <tbody>
-      {appointments.map(appointment => {
-        return (
-          <tr key={ appointment.id }>
-            <td>{ appointment.vin }</td>
-            <td>{ appointment.customer }</td>
-            <td>{new Date(appointment.date_time).toLocaleDateString()}</td>
-            <td>{new Date(appointment.date_time).toLocaleTimeString()}</td>
-            <td>{ appointment.technician.employee_id }</td>
-            <td>{ appointment.status }</td>
-            <td>{ appointment.reason }</td>
-            <td>{ isVIP(appointment.vin)}</td>
-
-            
-          </tr>
-        );
-      })}
-    </tbody>
-  </table>
+        <table className="table table-striped">
+          <thead>
+            <tr>
+              <th>VIN</th>
+              <th>Customer</th>
+              <th>Is VIP?</th>
+              <th>Date</th>
+              <th>Time</th>
+              <th>Technician</th>
+              <th>Status</th>
+              <th>Reason</th>             
+            </tr>
+          </thead>
+            <tbody>
+              {appointments.map(appointment => {
+                return (
+                  <tr key={ appointment.id }>
+                    <td>{ appointment.vin }</td>
+                    <td>{ appointment.customer }</td>
+                    <td>{ isVIP(appointment.vin)}</td>
+                    <td>{new Date(appointment.date_time).toLocaleDateString()}</td>
+                    <td>{new Date(appointment.date_time).toLocaleTimeString()}</td>
+                    <td>{ appointment.technician.employee_id }</td>
+                    <td>{ appointment.status }</td>
+                    <td>{ appointment.reason }</td>                  
+                  </tr>
+                );
+              })}
+            </tbody>
+         </table>
   </div>
   )
 }

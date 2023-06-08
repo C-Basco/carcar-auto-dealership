@@ -4,16 +4,18 @@ import sys
 import time
 import json
 import requests
-from service_rest.models import AutomobileVO
+
 
 sys.path.append("")
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "service_project.settings")
 django.setup()
 
+from service_rest.models import AutomobileVO
+
 
 def poll(repeat=True):
     while True:
-        print('Service poller polling for xxxx data')
+        print('Service poller polling for data')
         try:
             url = 'http://project-beta-inventory-api-1:8000/api/automobiles'
             response = requests.get(url)

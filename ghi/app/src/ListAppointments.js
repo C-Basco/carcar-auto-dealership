@@ -29,11 +29,7 @@ function AppointmentList(){
       fetchData();     
     }, []);
 
-  
-  
-
-   
-    if(!appointments){
+      if(!appointments){
       return null
 
     }
@@ -97,12 +93,13 @@ function AppointmentList(){
       <tr>
         <th>VIN</th>
         <th>Customer</th>
+        <th>Is VIP?</th>
         <th>Date</th>
         <th>Time</th>
         <th>Technician</th>
         
         <th>Reason</th>
-        <th>Is VIP?</th>
+        
         <th>Status</th>
       </tr>
     </thead>
@@ -112,12 +109,11 @@ function AppointmentList(){
           <tr key={ appointment.id }>
             <td>{ appointment.vin }</td>
             <td>{ appointment.customer }</td>
+            <td>{ isVIP(appointment.vin)}</td>
             <td>{new Date(appointment.date_time).toLocaleDateString()}</td>
             <td>{new Date(appointment.date_time).toLocaleTimeString()}</td>
-            <td>{ appointment.technician.employee_id }</td>
-            
-            <td>{ appointment.reason }</td>
-            <td>{ isVIP(appointment.vin)}</td>
+            <td>{ appointment.technician.employee_id }</td>      
+            <td>{ appointment.reason }</td>  
             <td>{ appointment.status }</td>
             <td>
               <div className="d-grid gap-2 d-sm-flex justify-content-sm-center">

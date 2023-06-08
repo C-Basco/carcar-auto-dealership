@@ -23,7 +23,7 @@ class Appointment(models.Model):
         on_delete=models.PROTECT,
     )
 
-    status = models.CharField(max_length=20, default="CONFIRMED")
+    status = models.CharField(max_length=20, default="confirmed")
 
     def cancel(self):
         status = "canceled"

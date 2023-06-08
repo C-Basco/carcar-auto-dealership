@@ -66,7 +66,7 @@ function AppointmentList() {
 	}
 
 	let currentAppointments = appointments.filter(
-		(appointment) => appointment.status === "CONFIRMED"
+		(appointment) => appointment.status === "confirmed"
 	);
 
 	return (

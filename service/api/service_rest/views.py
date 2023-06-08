@@ -57,14 +57,16 @@ def api_list_appointments(request):
         except Technician.DoesNotExist:
             return JsonResponse(
                 {"message": "Invalid technician"},
-                status=400,
+                status=404,
             )
         appointment = Appointment.objects.create(**content)
-        return JsonResponse(
+        response = JsonResponse(
             appointment,
             encoder=AppointmentDetailEncoder,
             safe=False
         )
+        response.status_code = 200
+        return response
 
 
 @require_http_methods(["DELETE", "GET"])
@@ -84,8 +86,10 @@ def api_list_appointment(request, id):
     elif request.method == "DELETE":
         try:
             appointment = Appointment.objects.get(id=id)
-            count, _ = appointment.delete()
-            return JsonResponse({"deleted": count > 0})
+            appointment.delete()
+            response = JsonResponse({"message": "appointment deleted"})
+            response.status_code = 200
+            return response
         except Appointment.DoesNotExist:
             response = JsonResponse({"message": "invalid appointment id"})
             response.status_code = 404

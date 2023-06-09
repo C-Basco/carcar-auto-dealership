@@ -12,7 +12,7 @@ function Nav() {
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
           <li className="nav-item">
               <NavLink className="nav-link active" aria-current="page" to="/">Home</NavLink>
-            </li>
+            </li>   
             <li className="nav-item">
               <NavLink className="nav-link" to="salespeople">Salespeople</NavLink>
             </li>
@@ -38,12 +38,14 @@ function Nav() {
               <NavLink className="nav-link" to="models">Models</NavLink>
             </li>
             <li className="nav-item">
-              <NavLink className="nav-link" to="models/new">New Models</NavLink>
+              <NavLink className="nav-link" to="models/new">New Model</NavLink>
             </li>
             <li className="nav-item">
-              <NavLink className="nav-link" to="automobiles">Automobiles</NavLink>
+              <NavLink className="nav-link" to="/automobiles/new">New Automobile</NavLink>
             </li>
-
+            <li className="nav-item">
+              <NavLink className="nav-link" to="automobiles/">List Automobile</NavLink>
+            </li>
             <li className="nav-item">
               <NavLink className="nav-link" to="/technicians">Technicians</NavLink>
             </li>
@@ -65,11 +67,7 @@ function Nav() {
             <li className="nav-item">
               <NavLink className="nav-link" to="/manufacturers/new">New Manufacturer</NavLink>
             </li>
-            <li className="nav-item">
-              <NavLink className="nav-link" to="/automobiles">Automobile Inventory</NavLink>
-            </li>
-
-          </ul>
+         </ul>
         </div>
       </div>
     </nav>

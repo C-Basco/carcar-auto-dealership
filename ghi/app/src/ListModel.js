@@ -9,7 +9,6 @@ function ListModels() {
         const response = await fetch(url);
         if(response.ok){
             const data = await response.json();
-            console.log(data);
             setModels(data.models);
         }
     }
@@ -18,7 +17,6 @@ function ListModels() {
         fetchModels();
       }, []);
 
-      console.log(models);
       if(!models){
         return null
       }
@@ -30,7 +28,7 @@ function ListModels() {
         <div className="d-grid gap-2 d-sm-flex justify-content-sm-center">
         <Link to="new/" className="btn btn-primary btn-lg px-4 gap-3">Add a Vehicle Model</Link>
         </div>
-        <table class="table table-striped">
+        <table className="table table-striped">
           <thead>
             <tr>
               <th>Vehicle Name</th>

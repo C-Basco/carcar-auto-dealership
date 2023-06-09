@@ -86,8 +86,8 @@ function VehicleModelForm() {
                         <option value="">Choose a Manufacturer</option>
                         {manufacturers.map(manufacturer => {
                             return(
-                                <option key={manufacturer.id} value={manufacturer.id}>
-                                {manufacturer.name}
+                                <option key={ manufacturer.id } value={ manufacturer.id }>
+                                { manufacturer.name }
                                 </option>
                               )
                      })};

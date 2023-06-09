@@ -28,7 +28,6 @@ function AutomobileList() {
 			return value;
 		}
 	}
-	console.log(autos);
 
 	return (
 		<div>

@@ -111,6 +111,7 @@ def api_list_sales(request, auto_vo_vin=None):
             safe=False,
         )
 
+
 @require_http_methods(["GET", "DELETE"])
 def api_sale(request, id):
     if request.method == "GET":
@@ -119,18 +120,23 @@ def api_sale(request, id):
             {"sale": sale},
             encoder=SalesListEncoder,
         )
-    else:
-        if request.method == "DELETE":
-            count = Sale.objects.filter(id=id).delete()
-            return JsonResponse({"deleted": count > 0})
+    elif request.method == "DELETE":
+        count = Sale.objects.filter(id=id).delete()
+        return JsonResponse({"deleted": count > 0})
 
 
 @require_http_methods(["PUT"])
 def api_sold_sales(request, id):
-    sale = Sale.objects.get(id=id)
-    sale.soldauto()
-    return JsonResponse(
-        Sale,
-        encoder=SalesListEncoder,
-        safe=False,
-    )
+    try:
+        sale = Sale.objects.get(id=id)
+        sale.soldauto()
+        return JsonResponse(
+            sale,
+            encoder=SalesListEncoder,
+            safe=False
+        )
+    except Sale.DoesNotExist:
+        return JsonResponse(
+            {"error": f"Sale with id {id} does not exist."},
+            status=404
+        )

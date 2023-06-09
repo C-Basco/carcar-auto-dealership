@@ -1,8 +1,6 @@
 from django.db import models
 from django.urls import reverse
 
-# Create your models here.
-
 
 class AutomobileVO(models.Model):
     vin = models.CharField(max_length=17, unique=True)
@@ -57,6 +55,7 @@ class Sale(models.Model):
     )
 
     def soldauto(self):
-        sold = True
-        self.sold = sold
+        automobile = self.automobile
+        automobile.sold = True
+        automobile.save()
         self.save()

@@ -3,18 +3,25 @@ import { useParams } from 'react-router-dom';
 
 
 function SaleForm() {
-  const { saleID } = useParams();
 
   const[customers, setCustomers] = useState([]);
-  const[salespeople, setSalespeople] =useState([]);
-  const[automobiles, setAutomobiles] =useState([]);
+  const[salespeople, setSalespeople] = useState([]);
+  const[automobiles, setAutomobiles] = useState([]);
+  const[sales,setSales] = useState([]);
 
   const[customer,setCustomer] = useState('');
   const[salesperson, setSalesperson] = useState('');
   const[automobile, setAutomobile] = useState('');
   const[price, setPrice] = useState('');
 
-
+  const fetchSalesData = async () => {
+    const url = 'http://localhost:8090/api/sales/';
+    const response = await fetch(url);
+    if (response.ok) {
+      const data = await response.json();
+      setSales(data.sales)
+    }
+  };
 
   const fetchSalespeopleData = async () => {
     const url = 'http://localhost:8090/api/salespeople/';
@@ -24,7 +31,6 @@ function SaleForm() {
       setSalespeople(data.salespersons)
     }
   };
-
 
   const fetchCustomersData = async () => {
     const url = 'http://localhost:8090/api/customers/';
@@ -49,6 +55,7 @@ function SaleForm() {
     fetchSalespeopleData();
     fetchCustomersData();
     fetchAutoData();
+    fetchSalesData();
   }, []);
 
 
@@ -71,54 +78,64 @@ const handlePriceChange = (event) => {
   setPrice(value);
 }
 
-  const handleSubmit = async (event,saleID) => {
-    event.preventDefault();
 
-    const data = {};
+const handleSubmit = async (event) => {
+  event.preventDefault();
 
-    data.customer = customer;
-    data.salesperson = salesperson;
-    data.automobile = automobile;
-    data.price = price;
+  const data = {};
 
+  data.customer = customer;
+  data.salesperson = salesperson;
+  data.automobile = automobile;
+  data.price = price;
 
-    const SalesUrl = 'http://localhost:8090/api/sales/';
-    const fetchConfig = {
-      method: "post",
-      body: JSON.stringify(data),
-      headers: {
-        'Content-Type': 'application/json',
-      },
+  const SalesUrl = 'http://localhost:8090/api/sales/';
+  const fetchConfig = {
+    method: "post",
+    body: JSON.stringify(data),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  }
+  console.log(data);
+  const response = await fetch(SalesUrl, fetchConfig);
+    if (response.ok) {
+      const newSale = await response.json();
+      console.log(newSale);
+      const saleId = newSale.sale.id;
+      console.log(saleId);
+      HandleSold(saleId);
+
+      setCustomer('');
+      setSalesperson('');
+      setAutomobile('');
+      setPrice('');
     }
-    console.log(data);
-    const response = await fetch(SalesUrl, fetchConfig);
-      if (response.ok) {
+  }
 
-        setCustomer('');
-        setSalesperson('');
-        setAutomobile('');
-        setPrice('');
-      }
-
-    const url = `http://localhost:8090/api/sales/${saleID}/sold`;
+  async function HandleSold(saleId) {
+    const url = `http://localhost:8090/api/sales/${saleId}/sold/`;
     const fetchSaleConfig = {
       method: 'PUT',
-    };
+    }
     try {
       const response = await fetch(url, fetchSaleConfig);
+      console.log(response);
+
       if (response.ok) {
-        console.log('Sale marked as sold!');
+        fetchSalesData();
+
+      console.log('Sale marked as sold!');
       } else {
         console.error('Failed to mark sale as sold:', response.status);
       }
     } catch (error) {
       console.error('Error:', error);
     }
-
   }
 
-
-  let unsoldauto = automobiles.filter(automobile => automobile.sold === false);
+  let soldVins = sales.filter((sale) => sale.automobile.sold).map((sale) => sale.automobile.vin);
+  let autoUnsold = automobiles.filter((auto) => !soldVins.includes(auto.vin));
 
 
   return (
@@ -130,10 +147,10 @@ const handlePriceChange = (event) => {
           <div className="mb-3">
               <select onChange={handleAutomobileChange} required name="automobile" id="automobile" value={automobile} className="form-select">
                 <option value="">Automobile VIN</option>
-                {unsoldauto?.map(automobile => {
+                {autoUnsold?.map(auto => {
                     return(
-                    <option key={automobile.vin} value={automobile.vin}>
-                      {automobile.vin}
+                    <option key={auto.vin} value={auto.vin}>
+                      {auto.vin}
                     </option>
                     )
                 })};
@@ -171,7 +188,7 @@ const handlePriceChange = (event) => {
           </form>
         </div>
       </div>
-      <p>{}</p>
+      <p>{sales.id}</p>
     </div>
   );
 }

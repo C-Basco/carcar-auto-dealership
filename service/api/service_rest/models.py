@@ -16,14 +16,13 @@ class Appointment(models.Model):
     reason = models.CharField(max_length=200)
     vin = models.CharField(max_length=17)
     customer = models.CharField(max_length=100)
+    status = models.CharField(max_length=20, default="confirmed")
 
     technician = models.ForeignKey(
         Technician,
         related_name="technician",
         on_delete=models.PROTECT,
     )
-
-    status = models.CharField(max_length=20, default="confirmed")
 
     def cancel(self):
         status = "canceled"

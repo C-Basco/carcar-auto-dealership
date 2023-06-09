@@ -16,13 +16,20 @@ def api_list_salespersons(request):
             encoder=SalespersonListEncoder,
         )
     else:
-        content = json.loads(request.body)
-        salesperson = Salesperson.objects.create(**content)
-        return JsonResponse(
-            salesperson,
-            encoder=SalespersonListEncoder,
-            safe=False,
-        )
+        try:
+            content = json.loads(request.body)
+            salesperson = Salesperson.objects.create(**content)
+            return JsonResponse(
+                salesperson,
+                encoder=SalespersonListEncoder,
+                safe=False,
+            )
+        except:
+            response = JsonResponse(
+                {"message": "Could not create the salesperson"}
+            )
+            response.status_code = 400
+            return response
 
 
 @require_http_methods(["GET", "DELETE", "PUT"])

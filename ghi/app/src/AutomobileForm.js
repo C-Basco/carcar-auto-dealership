@@ -4,13 +4,11 @@ import React, { useEffect, useState } from 'react';
 function AutomobileForm() {
 
     const[models, setModels] =useState([]);
+    const[model, setModel] = useState('');
+    const[year, setYear] = useState('');
+    const[vin, setVIN] = useState('');
+    const[color, setColor] = useState('');
 
-    const [formData, setFormData] = useState({
-      color: '',
-      year: '',
-      vin: '',
-      model: '',
-    });
 
     const fetchModelsData = async () => {
       const url = 'http://localhost:8100/api/models/';
@@ -25,15 +23,40 @@ function AutomobileForm() {
         fetchModelsData();
       }, []);
 
+    const handleModelChange = (event) => {
+      const value = event.target.value;
+      setModel(value);
+    }
+
+    const handleYearChange = (event) => {
+        const value = event.target.value;
+        setYear(value);
+    }
+
+    const handleVINChange = (event) => {
+        const value = event.target.value
+        setVIN(value);
+    }
+
+    const handleColorChange = (event) => {
+      const value = event.target.value
+      setColor(value);
+  }
+
 
       const handleSubmit = async (event) => {
         event.preventDefault();
 
+        const data = {};
+        data.vin = vin;
+        data.model_id = model;
+        data.year = year;
+        data.color = color;
 
         const AutoUrl = 'http://localhost:8100/api/automobiles/';
         const fetchConfig = {
           method: "post",
-          body: JSON.stringify(formData),
+          body: JSON.stringify(data),
           headers: {
             'Content-Type': 'application/json',
           },
@@ -42,51 +65,40 @@ function AutomobileForm() {
         const response = await fetch(AutoUrl, fetchConfig);
           if (response.ok) {
 
-            setFormData({
-                color: '',
-                year: '',
-                vin: '',
-                model: '',
-            });
+            setColor('');
+            setModel('');
+            setVIN('');
+            setYear('');
+
           }
       }
 
-      const handleFormChange = (e) => {
-        const value = e.target.value;
-        const inputName = e.target.name;
-
-        setFormData({
-            ...formData,
-
-            [inputName]: value
-        });
-      }
 
       return (
         <>
         <div className="row">
           <div className="offset-3 col-6">
             <div className="shadow p-4 mt-4">
-              <h1>Submit a new Vehicle Model</h1>
-              <form onSubmit={handleSubmit} id="create-customer-form">
+              <h1>Submit a new Automobile to Inventory</h1>
+              <form onSubmit={handleSubmit} id="create-automobile-form">
                 <div className="form-floating mb-3">
-                  <input onChange={handleFormChange} placeholder="Color..." required type="text" name="color" id="color" className="form-control"/>
+                  <input onChange={handleColorChange} placeholder="Color..." required type="text" name="color" id="color" value={color} className="form-control"/>
                   <label htmlFor="color">Enter Color</label>
                 </div>
                 <div className="form-floating mb-3">
-                <input onChange={handleFormChange} placeholder="Year" required type="number" name="year" id="year" className="form-control" />
+                <input onChange={handleYearChange} placeholder="Year" required type="number" name="year" id="year" value={year} className="form-control" />
                   <label htmlFor="year">Enter Year</label>
                 </div>
                 <div className="form-floating mb-3">
-                <input onChange={handleFormChange} placeholder="VIN" required type="text" name="vin" id="vin" className="form-control" />
+                <input onChange={handleVINChange} placeholder="VIN" required type="text" name="vin" id="vin" value={vin} className="form-control" />
                   <label htmlFor="vin">Enter VIN</label>
                 </div>
                 <div className="mb-3">
-                    <select onChange={handleFormChange} required name="models" id="Models" className="form-select">
-                        <option value="">Choose a Manufacturer</option>
+                    <select onChange={handleModelChange} required name="model" id="model" value={model} className="form-select">
+                        <option value="">Choose a Model</option>
                         {models.map(model => {
                             return(
-                                <option>
+                                <option key={model.id} value={model.id}>
                                 {model.name}
                                 </option>
                         )

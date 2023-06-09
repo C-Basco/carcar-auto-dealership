@@ -12,6 +12,7 @@ function SalespersonHistory(props) {
     const response = await fetch(url);
     if (response.ok) {
       const data = await response.json();
+      console.log(data);
       setSales(data.sales)
     }
   };
@@ -64,18 +65,19 @@ function SalespersonHistory(props) {
             </tr>
           </thead>
           <tbody>
-            {salesHistory?.filter(sale => sale.employee_id === selectedSalesperson)?.map( sale => {
+            {salesHistory?.filter(sale => sale.salesperson.employee_id === selectedSalesperson)?.map( sale => {
                 return (
-                    <tr key={sale.employee_id}>
-                        <td>{ sale.first_name } { sale.last_name }</td>
-                        <td>{ sale.cust_first_name } { sale.cust_last_name }</td>
-                        <td>{ sale.vin }</td>
+                    <tr key={sale.salesperson.id}>
+                        <td>{ sale.salesperson.first_name } { sale.salesperson.last_name }</td>
+                        <td>{ sale.customer.first_name } { sale.customer.last_name }</td>
+                        <td>{ sale.automobile.vin }</td>
                         <td>{ sale.price }</td>
                     </tr>
                 );
             })}
           </tbody>
         </table>
+        <p>{selectedSalesperson}</p>
       </div>
       </>
     );

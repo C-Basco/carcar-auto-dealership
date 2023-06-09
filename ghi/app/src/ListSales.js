@@ -5,7 +5,7 @@ function SalesList(props) {
         <>
       <div>
         <div className="d-grid gap-2 d-sm-flex justify-content-sm-center">
-        <Link to="new/" className="btn btn-primary btn-lg px-4 gap-3">Add a Customer</Link>
+        <Link to="new/" className="btn btn-primary btn-lg px-4 gap-3">Add a Sale</Link>
         </div>
         <table class="table table-striped">
           <thead>
@@ -21,10 +21,10 @@ function SalesList(props) {
             {props.sales?.map(sale => {
                 return (
                     <tr >
-                        <td>{ sale.employee_id }</td>
-                        <td>{ sale.first_name} { sale.last_name }</td>
-                        <td>{ sale.cust_first_name } { sale.cust_last_name }</td>
-                        <td>{ sale.vin }</td>
+                        <td>{ sale.salesperson.employee_id }</td>
+                        <td>{ sale.salesperson.first_name} { sale.salesperson.last_name }</td>
+                        <td>{ sale.customer.first_name } { sale.customer.last_name }</td>
+                        <td>{ sale.automobile.vin}</td>
                         <td>{ sale.price }</td>
                     </tr>
                 );

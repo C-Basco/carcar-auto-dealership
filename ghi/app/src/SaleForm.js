@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
 
 
 function SaleForm() {
@@ -97,7 +96,7 @@ const handleSubmit = async (event) => {
       'Content-Type': 'application/json',
     },
   }
-  console.log(data);
+
   const response = await fetch(SalesUrl, fetchConfig);
     if (response.ok) {
       const newSale = await response.json();
@@ -123,9 +122,8 @@ const handleSubmit = async (event) => {
       console.log(response);
 
       if (response.ok) {
+        fetchAutoData();
         fetchSalesData();
-
-      console.log('Sale marked as sold!');
       } else {
         console.error('Failed to mark sale as sold:', response.status);
       }
@@ -133,9 +131,6 @@ const handleSubmit = async (event) => {
       console.error('Error:', error);
     }
   }
-
-  let soldVins = sales.filter((sale) => sale.automobile.sold).map((sale) => sale.automobile.vin);
-  let autoUnsold = automobiles.filter((auto) => !soldVins.includes(auto.vin));
 
 
   return (
@@ -147,7 +142,7 @@ const handleSubmit = async (event) => {
           <div className="mb-3">
               <select onChange={handleAutomobileChange} required name="automobile" id="automobile" value={automobile} className="form-select">
                 <option value="">Automobile VIN</option>
-                {autoUnsold?.map(auto => {
+                {automobiles.filter((auto) => !auto.sold && !sales.some((sale) => sale.automobile.vin === auto.vin))?.map(auto => {
                     return(
                     <option key={auto.vin} value={auto.vin}>
                       {auto.vin}

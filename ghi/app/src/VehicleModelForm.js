@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
+
 function VehicleModelForm() {
 
     const [manufacturers, setManufacturers] = useState([]);
@@ -36,7 +37,6 @@ function VehicleModelForm() {
         setModelName(value);
     }
 
-
     const handleSubmit = async (event) => {
         event.preventDefault();
 
@@ -44,7 +44,6 @@ function VehicleModelForm() {
         data.name = modelName;
         data.manufacturer_id = manufacturer;
         data.picture_url = pictureUrl;
-
 
         const modelsUrl = "http://localhost:8100/api/models/";
         const fetchConfig = {

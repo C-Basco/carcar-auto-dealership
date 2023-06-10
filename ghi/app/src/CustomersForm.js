@@ -1,7 +1,7 @@
 import React, { useState} from 'react';
 
 
-function CustomerForm(props){
+function CustomerForm(){
 
     const [firstName, setFirstName] = useState('')
     const [lastName, setLastName] = useState('')
@@ -38,7 +38,6 @@ function CustomerForm(props){
         data.phone_number = phoneNumber;
         data.address = address;
 
-
         const customersUrl = "http://localhost:8090/api/customers/";
         const fetchConfig = {
             method: "post",
@@ -57,10 +56,7 @@ function CustomerForm(props){
         setPhoneNumber('');
         setAddress('');
         }
-
-
     }
-
 
 
     return (

@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
 
-function SalespersonHistory(props) {
+function SalespersonHistory() {
 
   const [salespeople, setSalespeople] = useState([]);
   const [selectedSalesperson, setSelectedSalesperson] = useState('');
   const [salesHistory, setSales] = useState([]);
-
 
   const fetchSales = async () => {
     const url = 'http://localhost:8090/api/sales/';
@@ -16,7 +15,6 @@ function SalespersonHistory(props) {
       setSales(data.sales)
     }
   };
-
 
   const handleSalespersonChange = (event) => {
     setSelectedSalesperson(event.target.value)
@@ -30,7 +28,6 @@ function SalespersonHistory(props) {
       setSalespeople(data.salespersons)
     }
   };
-
 
   useEffect(() => {
     fetchSalespeopleData();

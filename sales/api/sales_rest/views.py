@@ -10,6 +10,7 @@ from .encoders import (
     SalesListEncoder
 )
 
+
 @require_http_methods(["GET", "POST"])
 def api_list_salespersons(request):
     if request.method == "GET":

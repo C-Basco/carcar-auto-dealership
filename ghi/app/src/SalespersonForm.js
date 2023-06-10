@@ -53,8 +53,6 @@ function SalespersonForm(props){
 
     }
 
-
-
     return (
         <>
         <div className="row">
@@ -81,8 +79,6 @@ function SalespersonForm(props){
         </div>
         </>
     )
-
-
 }
 
 export default SalespersonForm

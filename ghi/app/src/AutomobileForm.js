@@ -9,7 +9,6 @@ function AutomobileForm() {
     const[vin, setVIN] = useState('');
     const[color, setColor] = useState('');
 
-
     const fetchModelsData = async () => {
       const url = 'http://localhost:8100/api/models/';
       const response = await fetch(url);
@@ -43,7 +42,6 @@ function AutomobileForm() {
       setColor(value);
   }
 
-
       const handleSubmit = async (event) => {
         event.preventDefault();
 
@@ -69,7 +67,6 @@ function AutomobileForm() {
             setModel('');
             setVIN('');
             setYear('');
-
           }
       }
 

@@ -41,3 +41,12 @@ class Appointment(models.Model):
 class AutomobileVO(models.Model):
     vin = models.CharField(max_length=17, unique=True)
     sold = models.BooleanField(default=False)
+
+
+class ServiceGoal(models.Model):
+    starts = models.DateTimeField()
+    ends = models.DateTimeField()
+    num_cars_confirmed = models.IntegerField()
+    num_cars_finished = models.IntegerField()
+    num_cars_canceled = models.IntegerField()
+    notes = models.CharField(max_length=200)

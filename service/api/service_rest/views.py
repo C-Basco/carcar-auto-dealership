@@ -1,9 +1,10 @@
 from django.http import JsonResponse
-from .models import Technician, Appointment
+from .models import Technician, Appointment, ServiceGoal
 from django.views.decorators.http import require_http_methods
 import json
 from .encoders import (AppointmentDetailEncoder,
-                       TechnicianEncoder)
+                       TechnicianEncode,
+                       ServiceGoalsEncoder)
 
 
 @require_http_methods(["GET", "POST"])
@@ -128,3 +129,22 @@ def api_finish_appointment(request, id):
             response = JsonResponse({"message": "invalid appointment id"})
             response.status_code = 404
             return response
+
+
+@require_http_methods(["GET", "POST"])
+def api_list_service_goal(request):
+    if request.method == "GET":
+        goals = ServiceGoal.objects.all()
+        return JsonResponse(
+            {"goals": goals},
+            encoder=ServiceGoalsEncoder,
+        )
+    else:
+        content = json.loads(request.body)
+        goal = ServiceGoal.objects.create(**content)
+        return JsonResponse(
+            goal,
+            encoder=ServiceGoalsEncoder,
+            safe=False
+        )
+        

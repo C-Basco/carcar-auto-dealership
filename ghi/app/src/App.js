@@ -30,6 +30,8 @@ function App(props) {
           <Route path="manufacturers/" element={<ManufacturerList />} />
           <Route path='manufacturers/new' element={<ManufacturerForm/>} />
           <Route path="automobiles/" element={<AutomobileList />} />
+          Route path="appointments/goals" element={}
+						
         </Routes>
       </div>
     </BrowserRouter>

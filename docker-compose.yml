@@ -52,6 +52,20 @@ services:
       DATABASE_URL: postgres://service:password@database:5432/service
       WAIT_HOSTS: database:5432
       WAIT_TIMEOUT: 240
+  customers-api:
+    build:
+      context: ./customers/api
+      dockerfile: ./Dockerfile.dev
+    ports:
+      - "8070:8000"
+    volumes:
+      - ./customers/api:/app
+    depends_on:
+      - database
+    environment:
+      DATABASE_URL: postgres://service:password@database:5432/customers
+      WAIT_HOSTS: database:5432
+      WAIT_TIMEOUT: 240
   service-poller:
     build:
       context: ./service/poll

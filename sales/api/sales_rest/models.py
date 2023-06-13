@@ -1,5 +1,4 @@
 from django.db import models
-from customers.models import Customer
 
 
 class AutomobileVO(models.Model):
@@ -41,7 +40,7 @@ class Sale(models.Model):
     )
 
     customer = models.ForeignKey(
-        Customer,
+        CustomerVO,
         related_name="+",
         on_delete=models.CASCADE,
     )

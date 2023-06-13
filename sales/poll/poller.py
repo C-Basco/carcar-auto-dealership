@@ -20,7 +20,7 @@ def poll(repeat=True):
         try:
             # Write your polling logic, here
             # Do not copy entire file
-            url = "http://project-beta-inventory-api-1:8000/api/automobiles"
+            url = "http://carcar-auto-dealership-inventory-api-1:8000/api/automobiles"
             response = requests.get(url)
             content = json.loads(response.content)
             for automobile in content["autos"]:

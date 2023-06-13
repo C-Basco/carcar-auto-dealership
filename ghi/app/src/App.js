@@ -43,7 +43,7 @@ function App(props) {
 					<Route path="customers/">
 						<Route
 							path=""
-							element={<CustomersList customers={props.customers} />}
+							element={<CustomersList/>}
 						/>
 						<Route
 							path="new/"

@@ -32,7 +32,7 @@ function SaleForm() {
   };
 
   const fetchCustomersData = async () => {
-    const url = 'http://localhost:8090/api/customers/';
+    const url = 'http://localhost:8070/customers/';
     const customersResponse = await fetch(url);
     if (customersResponse.ok) {
       const data = await customersResponse.json();

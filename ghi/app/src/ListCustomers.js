@@ -1,7 +1,28 @@
 import { Link } from 'react-router-dom';
+import React, { useEffect, useState} from 'react';
 
 
-function CustomersList(props) {
+function CustomersList() {
+
+  const [customers, setCustomers] = useState("");
+
+	const fetchData = async () => {
+		const url = "http://localhost:8070/api/customers/";
+		const response = await fetch(url);
+		if (response.ok) {
+			const data = await response.json();
+			setCustomers(data.customers);
+		}
+	};
+	useEffect(() => {
+		fetchData();
+	}, []);
+
+	if (!customers) {
+		return null;
+	}
+
+
     return (
         <>
       <div>
@@ -18,7 +39,7 @@ function CustomersList(props) {
             </tr>
           </thead>
           <tbody>
-            {props.customers?.map(customer => {
+            {customers.map(customer => {
                 return (
                     <tr >
                         <td>{ customer.first_name }</td>

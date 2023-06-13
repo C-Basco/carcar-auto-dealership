@@ -1,4 +1,3 @@
-from django.shortcuts import render
 from django.views.decorators.http import require_http_methods
 import json
 from django.http import JsonResponse
@@ -6,7 +5,7 @@ from django.http import JsonResponse
 from .models import Customer
 from .encoders import CustomerListEncoder
 
-# Create your views here.
+
 @require_http_methods(["GET", "POST"])
 def api_list_customers(request):
     if request.method == "GET":

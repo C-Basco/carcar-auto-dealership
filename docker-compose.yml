@@ -63,7 +63,7 @@ services:
     depends_on:
       - database
     environment:
-      DATABASE_URL: postgres://service:password@database:5432/customers
+      DATABASE_URL: postgres://customers:password@database:5432/customers
       WAIT_HOSTS: database:5432
       WAIT_TIMEOUT: 240
   service-poller:

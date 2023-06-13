@@ -2,8 +2,8 @@ from django.views.decorators.http import require_http_methods
 import json
 from django.http import JsonResponse
 
-from .models import Salesperson, Sale, AutomobileVO
-from customers.models import Customer
+from .models import Salesperson, Sale, AutomobileVO, CustomerVO
+
 
 from .encoders import (
     SalespersonListEncoder,
@@ -101,7 +101,7 @@ def api_list_sales(request, auto_vo_vin=None):
             content["automobile"] = auto
 
             customer = content["customer"]
-            cust = Customer.objects.get(id=customer)
+            cust = CustomerVO.objects.get(id=customer)
             content["customer"] = cust
 
             salesperson = content["salesperson"]
@@ -114,7 +114,7 @@ def api_list_sales(request, auto_vo_vin=None):
                 encoder=SalesListEncoder,
                 safe=False,
             )
-        except Customer.DoesNotExist:
+        except Sale.DoesNotExist:
             response = JsonResponse({"message": "Does not exist"})
             response.status_code = 404
             return response
